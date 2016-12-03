@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+    <item
+        android:id="@+id/add"
+        android:title="@string/main_menu_item_add" />
+    <item
+        android:id="@+id/setting"
+        android:title="@string/main_menu_item_setting" />
+    <item
+        android:id="@+id/about"
+        android:title="@string/main_menu_item_about" />
+</menu>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">笔记本</string>
+    <string name="title_activity_note">笔记</string>
+    <string name="edit_text_hint_note_content">内容</string>
+    <string name="edit_text_hint_note_title">标题</string>
+    <string name="main_menu_item_about">关于</string>
+    <string name="main_menu_item_setting">设置</string>
+    <string name="main_menu_item_add">添加新笔记</string>
+    <string name="default_note_title">标题</string>
+    <string name="default_note_simple_content">预览内容</string>
+    <string name="default_note_edit_time">2016-12-01 08:48:40</string>
+    <string name="note_menu_save">保存</string>
+    <string name="note_menu_encryption">加密</string>
+    <string name="unDevelopment">尚未开发</string>
+    <string name="save_succeed">笔记保存成功</string>
+    <string name="list_context_menu_delete_note">删除笔记</string>
+    <string name="list_context_menu_delete_all_notes">删除全部笔记</string>
+</resources>

@@ -1,0 +1,10 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="layout_note_title_height">60dp</dimen>
+    <dimen name="listview_cell_note_title_size">24sp</dimen>
+    <dimen name="listview_cell_note_simple_content_size">18sp</dimen>
+    <dimen name="listview_cell_margin">5dp</dimen>
+</resources>

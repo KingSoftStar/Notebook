@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/listview_cell_margin"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/listview_cell_note_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:scrollbars="none"
+        android:text="@string/default_note_title"
+        android:textSize="@dimen/listview_cell_note_title_size" />
+
+    <TextView
+        android:id="@+id/listview_cell_note_edit_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/default_note_edit_time" />
+
+    <TextView
+        android:id="@+id/listview_cell_note_simple_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:text="@string/default_note_simple_content"
+        android:textSize="@dimen/listview_cell_note_simple_content_size" />
+</LinearLayout>
