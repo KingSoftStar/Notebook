@@ -209,7 +209,26 @@ class Note implements Serializable, Comparable {
     public int compareTo(Object o) {
         if (o.getClass().getName().equals(this.getClass().getName())) {
             Note note = (Note) o;
-            return mIdentify.compareTo(note.getIdentify());
+            switch (3) {
+                case 1:
+                    /*按Identify属性排序*/
+                    return mIdentify.compareTo(note.getIdentify());
+                case 2:
+                    /*按最后编辑时间排序*/
+                    return mEditTime.compareTo(note.getEditTime());
+                case 3:
+                    /*按最后编辑时间反向排序*/
+                    return note.getEditTime().compareTo(mEditTime);
+                case 4:
+                    /*按创建时间排序*/
+                    return mCreateTime.compareTo(note.getCreateTime());
+                case 5:
+                    /*按创建时间反向排序*/
+                    return note.getCreateTime().compareTo(mCreateTime);
+                case 6:
+                    /*按标题排序*/
+                    return mTitle.compareTo(note.getTitle());
+            }
         }
         throw new ClassCastException("变量类型错误");
     }

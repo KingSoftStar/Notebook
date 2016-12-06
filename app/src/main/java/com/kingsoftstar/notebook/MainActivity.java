@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         floatingActionButton.setOnClickListener(this);
 
         mNotes.addAll(SQLManager.GetNoteList(this, "Notebook.db", 1));
+        Collections.sort(mNotes);
         noteAdapter = new NoteAdapter(MainActivity.this, R.layout.listview_cell_note, mNotes);
         listView = (ListView) findViewById(R.id.activity_main_listview);
         listView.setAdapter(noteAdapter);
@@ -117,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     } else {
                         mNotes.add(note);
                     }
+                    Collections.sort(mNotes);
                     noteAdapter.notifyDataSetChanged();
                 }
                 break;
