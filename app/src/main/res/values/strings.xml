@@ -15,4 +15,6 @@
     <string name="save_succeed">Note Save Succeed</string>
     <string name="list_context_menu_delete_note">Delete note</string>
     <string name="list_context_menu_delete_all_notes">Delete All Notes</string>
+    <string name="encryption_succeed">Encryption Succeed</string>
+    <string name="empty_title">Untitled</string>
 </resources>

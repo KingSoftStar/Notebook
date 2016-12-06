@@ -52,11 +52,7 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
      */
     @Override
     public void onClick(View v) {
-        mNote.setTitle(String.valueOf(mET_Title.getText()));
-        mNote.setContent(String.valueOf(mET_Content.getText()));
-        SQLManager.UpdateNote(this, "notebook.db", 1, mNote);
-        isChanged = true;
-        Toast.makeText(this, R.string.save_succeed, Toast.LENGTH_SHORT).show();
+        saveNote();
     }
 
     /**
@@ -127,15 +123,24 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.note_menu_save:
-                mNote.setContent(String.valueOf(mET_Content.getText()));
-                SQLManager.UpdateNote(this, "notebook.db", 1, mNote);
-                isChanged = true;
-                Toast.makeText(this, R.string.save_succeed, Toast.LENGTH_SHORT).show();
+                saveNote();
                 break;
             case R.id.note_menu_encryption:
-                Toast.makeText(this, R.string.unDevelopment, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.unDevelopment), Toast.LENGTH_SHORT).show();
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    void saveNote() {
+        if (String.valueOf(mET_Title.getText()).trim().isEmpty()) {
+            mNote.setTitle(getString(R.string.empty_title));
+        } else {
+            mNote.setTitle(String.valueOf(mET_Title.getText()));
+        }
+        mNote.setContent(String.valueOf(mET_Content.getText()));
+        SQLManager.UpdateNote(this, "notebook.db", 1, mNote);
+        isChanged = true;
+        Toast.makeText(this, getString(R.string.save_succeed), Toast.LENGTH_SHORT).show();
     }
 }

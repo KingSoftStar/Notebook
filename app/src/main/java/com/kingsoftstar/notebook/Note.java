@@ -112,6 +112,19 @@ class Note implements Serializable, Comparable {
         }
     }
 
+    /**
+     * 变更加密开关，使用用户密码（全局）对笔记内容进行加密
+     *
+     * @param to_Encryption true--加密存储笔记内容；false--解密存储笔记内容
+     */
+    void setEncryption(boolean to_Encryption) {
+        if (to_Encryption) {
+            if (!mIsEncryption) {
+                mContent = getEncryption(mContent);
+            }
+        }
+    }
+
     String getContent() {
         return mContent;
     }

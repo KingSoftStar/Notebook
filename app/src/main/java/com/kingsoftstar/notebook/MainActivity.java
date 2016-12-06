@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.setting:
             case R.id.about:
             default:
-                Toast.makeText(this, String.format("%s %d", item.getTitle(), R.string.unDevelopment), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, String.format("%s %s", item.getTitle(), getString(R.string.unDevelopment)), Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }
