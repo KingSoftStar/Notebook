@@ -16,12 +16,20 @@ import java.util.List;
 
 public class SQLManager extends SQLiteOpenHelper {
 
-    private static final String CREATE_NOTE = "create table notebook ("
-            + "id text primary key,"
-            + "title text,"
-            + "create_time text,"
-            + "edit_time text,"
-            + "content text)";
+    static final int CURRENT_DATABASE_VERSION = 1;
+    static final String DATABASE_FILE_NAME = "Notebook.db";
+    private static final String TABLE_NAME = "notebook";
+    private static final String KEY_IDENTIFY = "id";
+    private static final String KEY_TITLE = "title";
+    private static final String KEY_CREATE_TIME = "create_time";
+    private static final String KEY_EDIT_TIME = "edit_time";
+    private static final String KEY_CONTENT = "content";
+    private static final String CREATE_NOTE = "create table " + TABLE_NAME + " ("
+            + KEY_IDENTIFY + " text primary key,"
+            + KEY_TITLE + " text,"
+            + KEY_CREATE_TIME + " text,"
+            + KEY_EDIT_TIME + " text,"
+            + KEY_CONTENT + " text)";
     private static SQLManager sqlManager;
     private static SQLiteDatabase sqLiteDatabase;
     private Context mContext;
@@ -54,14 +62,14 @@ public class SQLManager extends SQLiteOpenHelper {
         List<Note> notes = new ArrayList<>();
         sqlManager = new SQLManager(context, fileName, null, version);
         sqLiteDatabase = sqlManager.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.query("notebook", null, null, null, null, null, null);
+        Cursor cursor = sqLiteDatabase.query(TABLE_NAME, null, null, null, null, null, null);
         if (cursor.moveToFirst()) {
             do {
-                Note note = new Note(cursor.getString(cursor.getColumnIndex("id")),
-                        cursor.getString(cursor.getColumnIndex("title")),
-                        cursor.getString(cursor.getColumnIndex("create_time")),
-                        cursor.getString(cursor.getColumnIndex("edit_time")),
-                        cursor.getString(cursor.getColumnIndex("content")));
+                Note note = new Note(cursor.getString(cursor.getColumnIndex(KEY_IDENTIFY)),
+                        cursor.getString(cursor.getColumnIndex(KEY_TITLE)),
+                        cursor.getString(cursor.getColumnIndex(KEY_CREATE_TIME)),
+                        cursor.getString(cursor.getColumnIndex(KEY_EDIT_TIME)),
+                        cursor.getString(cursor.getColumnIndex(KEY_CONTENT)));
                 notes.add(note);
             } while (cursor.moveToNext());
         }
@@ -81,12 +89,12 @@ public class SQLManager extends SQLiteOpenHelper {
         }
         sqLiteDatabase = sqlManager.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("id", note.getIdentify());
-        values.put("title", note.getTitle());
-        values.put("create_time", note.getCreateTime());
-        values.put("edit_time", note.getEditTime());
-        values.put("content", note.getContent());
-        return sqLiteDatabase.insert("notebook", null, values) != -1;
+        values.put(KEY_IDENTIFY, note.getIdentify());
+        values.put(KEY_TITLE, note.getTitle());
+        values.put(KEY_CREATE_TIME, note.getCreateTime());
+        values.put(KEY_EDIT_TIME, note.getEditTime());
+        values.put(KEY_CONTENT, note.getContent());
+        return sqLiteDatabase.insert(TABLE_NAME, null, values) != -1;
     }
 
     /**
@@ -102,16 +110,16 @@ public class SQLManager extends SQLiteOpenHelper {
             sqlManager = new SQLManager(context, fileName, null, version);
         }
         sqLiteDatabase = sqlManager.getWritableDatabase();
-        Cursor cursor = sqLiteDatabase.query("notebook", new String[]{"id"}, "id = ?", new String[]{note.getIdentify()}, null, null, null);
+        Cursor cursor = sqLiteDatabase.query(TABLE_NAME, new String[]{KEY_IDENTIFY}, KEY_IDENTIFY + " = ?", new String[]{note.getIdentify()}, null, null, null);
         if (cursor.moveToFirst()) {
             ContentValues values = new ContentValues();
-            values.put("title", note.getTitle());
-            values.put("edit_time", note.getEditTime());
+            values.put(KEY_TITLE, note.getTitle());
+            values.put(KEY_EDIT_TIME, note.getEditTime());
             try {
-                values.put("content", note.getContent());
+                values.put(KEY_CONTENT, note.getContent());
             } catch (Exception e) {
             }
-            ret = sqLiteDatabase.update("notebook", values, "id = ?", new String[]{note.getIdentify()}) > 0;
+            ret = sqLiteDatabase.update(TABLE_NAME, values, KEY_IDENTIFY + " = ?", new String[]{note.getIdentify()}) > 0;
         } else {
             ret = AddNote(context, fileName, version, note);
         }
@@ -131,7 +139,7 @@ public class SQLManager extends SQLiteOpenHelper {
             sqlManager = new SQLManager(context, fileName, null, version);
         }
         sqLiteDatabase = sqlManager.getWritableDatabase();
-        sqLiteDatabase.delete("notebook", whereClause, whereArgs);
+        sqLiteDatabase.delete(TABLE_NAME, whereClause, whereArgs);
     }
 
     /**
@@ -147,15 +155,13 @@ public class SQLManager extends SQLiteOpenHelper {
             sqlManager = new SQLManager(context, fileName, null, version);
         }
         sqLiteDatabase = sqlManager.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.query("notebook", null, "identify=?", new String[]{noteIdentify}, null, null, null);
+        Cursor cursor = sqLiteDatabase.query(TABLE_NAME, null, KEY_IDENTIFY + " = ?", new String[]{noteIdentify}, null, null, null);
         if (cursor.moveToFirst()) {
-            note = new Note(cursor.getString(cursor.getColumnIndex("id")),
-                    cursor.getString(cursor.getColumnIndex("title")),
-                    cursor.getString(cursor.getColumnIndex("create_time")),
-                    cursor.getString(cursor.getColumnIndex("edit_time")),
-                    cursor.getString(cursor.getColumnIndex("content")),
-                    cursor.getInt(cursor.getColumnIndex("encryption")) != 0,
-                    cursor.getString(cursor.getColumnIndex("password")));
+            note = new Note(cursor.getString(cursor.getColumnIndex(KEY_IDENTIFY)),
+                    cursor.getString(cursor.getColumnIndex(KEY_TITLE)),
+                    cursor.getString(cursor.getColumnIndex(KEY_CREATE_TIME)),
+                    cursor.getString(cursor.getColumnIndex(KEY_EDIT_TIME)),
+                    cursor.getString(cursor.getColumnIndex(KEY_CONTENT)));
         }
         cursor.close();
         return note;

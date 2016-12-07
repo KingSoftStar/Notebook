@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.note_add);
         floatingActionButton.setOnClickListener(this);
 
-        mNotes.addAll(SQLManager.GetNoteList(this, "Notebook.db", 1));
+        mNotes.addAll(SQLManager.GetNoteList(this, SQLManager.DATABASE_FILE_NAME, SQLManager.CURRENT_DATABASE_VERSION));
         Collections.sort(mNotes);
         noteAdapter = new NoteAdapter(MainActivity.this, R.layout.listview_cell_note, mNotes);
         listView = (ListView) findViewById(R.id.activity_main_listview);
@@ -88,13 +88,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int position = menuInfo.position;
         switch (item.getItemId()) {
             case 0:
-                SQLManager.DeleteNote(this, "Notebook.db", 1, "id = ?", new String[]{mNotes.get(position).getIdentify()});
+                SQLManager.DeleteNote(this, SQLManager.DATABASE_FILE_NAME, SQLManager.CURRENT_DATABASE_VERSION, "id = ?", new String[]{mNotes.get(position).getIdentify()});
                 mNotes.remove(position);
                 noteAdapter.notifyDataSetChanged();
                 break;
             case 1:
                 mNotes.clear();
-                SQLManager.DeleteNote(this, "Notebook.db", 1, null, null);
+                SQLManager.DeleteNote(this, SQLManager.DATABASE_FILE_NAME, SQLManager.CURRENT_DATABASE_VERSION, null, null);
                 noteAdapter.notifyDataSetChanged();
                 break;
         }
@@ -113,7 +113,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (requestCode) {
             case 1:
                 if (resultCode == RESULT_OK) {
-                    Note note = (Note) data.getSerializableExtra("result");
+                    Note note;
+//                    note = (Note) data.getSerializableExtra("result");
+                    String identify = data.getStringExtra("identify");
+                    note = SQLManager.QueryNote(this, SQLManager.DATABASE_FILE_NAME, SQLManager.CURRENT_DATABASE_VERSION, identify);
                     if (mNoteIndex != -1) {
                         mNotes.set(mNoteIndex, note);
                     } else {

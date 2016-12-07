@@ -95,7 +95,7 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
     public void onBackPressed() {
         if (isChanged) {
             Intent intent = new Intent();
-            intent.putExtra("return", mNote.getIdentify());
+            intent.putExtra("identify", mNote.getIdentify());
             setResult(RESULT_OK, intent);
         } else {
             setResult(RESULT_CANCELED);
@@ -139,7 +139,7 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
             mNote.setTitle(String.valueOf(mET_Title.getText()));
         }
         mNote.setContent(String.valueOf(mET_Content.getText()));
-        SQLManager.UpdateNote(this, "notebook.db", 1, mNote);
+        SQLManager.UpdateNote(this, SQLManager.DATABASE_FILE_NAME, SQLManager.CURRENT_DATABASE_VERSION, mNote);
         isChanged = true;
         Toast.makeText(this, getString(R.string.save_succeed), Toast.LENGTH_SHORT).show();
     }
