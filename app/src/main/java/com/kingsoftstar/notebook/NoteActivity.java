@@ -5,14 +5,11 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import java.util.logging.Logger;
 
 public class NoteActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -37,15 +34,15 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
         mET_Content = (EditText) findViewById(R.id.edit_text_note_content);
 
         Intent intent = getIntent();
-        String action=intent.getAction();
-        String type=intent.getType();
-        if(action!=null&&Intent.ACTION_SEND.equals(action)&&type!=null){
-            if("text/plain".equals(type)){
-                mNote=new Note();
-                String content=intent.getStringExtra(Intent.EXTRA_TEXT);
+        String action = intent.getAction();
+        String type = intent.getType();
+        if (action != null && Intent.ACTION_SEND.equals(action) && type != null) {
+            if ("text/plain".equals(type)) {
+                mNote = new Note();
+                String content = intent.getStringExtra(Intent.EXTRA_TEXT);
                 mET_Content.setText(content);
             }
-        }else{
+        } else {
             mNote = (Note) intent.getSerializableExtra("noteIdentify");
             if (mNote == null) {
                 mNote = new Note();
@@ -160,15 +157,15 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
         Toast.makeText(this, getString(R.string.save_succeed), Toast.LENGTH_SHORT).show();
     }
 
-    void shareNote(){
-        if(String.valueOf(mET_Title.getText()).trim().isEmpty()){
+    void shareNote() {
+        if (String.valueOf(mET_Title.getText()).trim().isEmpty()) {
             mNote.setTitle(getString(R.string.empty_title));
-        }else{
+        } else {
             mNote.setTitle(String.valueOf(mET_Title.getText()));
         }
         mNote.setContent(String.valueOf(mET_Content.getText()));
-        Intent intent=new Intent(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_TEXT,"标题："+mNote.getTitle()+"\n内容："+mNote.getContent()+"\n来自："+getString(R.string.app_name));
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_TEXT, "标题：" + mNote.getTitle() + "\n内容：" + mNote.getContent() + "\n来自：" + getString(R.string.app_name));
         intent.setType("text/plain");
         startActivity(intent);
     }
