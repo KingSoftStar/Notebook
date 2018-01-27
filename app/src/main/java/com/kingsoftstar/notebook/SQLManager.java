@@ -53,10 +53,11 @@ public class SQLManager extends SQLiteOpenHelper {
     }
 
     /**
+     * 获取指定数据库中的全部数据列表
      * @param context
      * @param fileName
      * @param version
-     * @return
+     * @return 空列表或数据库中的所有数据
      */
     static List<Note> GetNoteList(Context context, String fileName, int version) {
         List<Note> notes = new ArrayList<>();
@@ -78,6 +79,7 @@ public class SQLManager extends SQLiteOpenHelper {
     }
 
     /**
+     * 向数据库中添加数据
      * @param context
      * @param fileName
      * @param version
@@ -98,6 +100,7 @@ public class SQLManager extends SQLiteOpenHelper {
     }
 
     /**
+     * 更新数据库中的指定数据信息
      * @param context
      * @param fileName
      * @param version
@@ -128,6 +131,7 @@ public class SQLManager extends SQLiteOpenHelper {
     }
 
     /**
+     * 删除数据库中的指定数据
      * @param context
      * @param fileName
      * @param version
@@ -143,11 +147,12 @@ public class SQLManager extends SQLiteOpenHelper {
     }
 
     /**
+     * 在数据库中查找指定标识对应的数据
      * @param context
      * @param fileName
      * @param version
      * @param noteIdentify
-     * @return
+     * @return null或指定标识对应的数据
      */
     static Note QueryNote(Context context, String fileName, int version, String noteIdentify) {
         Note note = null;
