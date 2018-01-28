@@ -165,7 +165,9 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
         }
         mNote.setContent(String.valueOf(mET_Content.getText()));
         Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_TEXT, "标题：" + mNote.getTitle() + "\n内容：" + mNote.getContent() + "\n来自：" + getString(R.string.app_name));
+        intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.edit_text_hint_note_title) + "："
+                + mNote.getTitle() + "\n" + getString(R.string.edit_text_hint_note_content) + "："
+                + mNote.getContent() + "\n" + getString(R.string.send_from) + "：" + getString(R.string.app_name));
         intent.setType("text/plain");
         startActivity(intent);
     }

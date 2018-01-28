@@ -19,4 +19,6 @@
     <string name="encryption_succeed">加密成功</string>
     <string name="empty_title">无题</string>
     <string name="note_menu_share">分享</string>
+    <string name="list_context_menu_share_note">分享</string>
+    <string name="send_from">来自</string>
 </resources>

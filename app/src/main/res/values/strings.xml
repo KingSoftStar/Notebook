@@ -18,4 +18,6 @@
     <string name="encryption_succeed">Encryption Succeed</string>
     <string name="empty_title">Untitled</string>
     <string name="note_menu_share">Share</string>
+    <string name="list_context_menu_share_note">Share</string>
+    <string name="send_from">From</string>
 </resources>

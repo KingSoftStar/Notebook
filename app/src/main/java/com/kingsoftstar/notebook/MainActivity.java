@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         listView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
             @Override
             public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+                menu.add(1, 2, 0, getString(R.string.list_context_menu_share_note));
                 menu.add(0, 0, 0, R.string.list_context_menu_delete_note);
                 menu.add(0, 1, 0, R.string.list_context_menu_delete_all_notes);
             }
@@ -96,6 +97,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mNotes.clear();
                 SQLManager.DeleteNote(this, SQLManager.DATABASE_FILE_NAME, SQLManager.CURRENT_DATABASE_VERSION, null, null);
                 noteAdapter.notifyDataSetChanged();
+                break;
+            case 2:
+                String send = null;
+                Note note = mNotes.get(position);
+                send = getString(R.string.edit_text_hint_note_title) + ":" + note.getTitle() + "\n"
+                        + getString(R.string.edit_text_hint_note_content) + ":" + note.getContent() + "\n"
+                        + getString(R.string.send_from) + ":" + getString(R.string.app_name);
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.putExtra(Intent.EXTRA_TEXT, send);
+                intent.setType("text/plain");
+                startActivity(intent);
                 break;
         }
         return super.onContextItemSelected(item);
