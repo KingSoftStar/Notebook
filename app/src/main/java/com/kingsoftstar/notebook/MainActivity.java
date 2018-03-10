@@ -33,18 +33,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
+        Toolbar toolbar = findViewById(R.id.activity_main_toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(R.string.app_name);
         toolbar.setOnCreateContextMenuListener(this);
 
-        FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.note_add);
+        FloatingActionButton floatingActionButton = findViewById(R.id.note_add);
         floatingActionButton.setOnClickListener(this);
 
         mNotes.addAll(SQLManager.GetNoteList(this, SQLManager.DATABASE_FILE_NAME, SQLManager.CURRENT_DATABASE_VERSION));
         Collections.sort(mNotes);
         noteAdapter = new NoteAdapter(MainActivity.this, R.layout.listview_cell_note, mNotes);
-        listView = (ListView) findViewById(R.id.activity_main_listview);
+        listView = findViewById(R.id.activity_main_listview);
         listView.setAdapter(noteAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -64,6 +64,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 menu.add(0, 1, 0, R.string.list_context_menu_delete_all_notes);
             }
         });
+    }
+
+    /**
+     * Dispatch onResume() to fragments.  Note that for better inter-operation
+     * with older versions of the platform, at the point of this call the
+     * fragments attached to the activity are <em>not</em> resumed.  This means
+     * that in some cases the previous state may still be saved, not allowing
+     * fragment transactions that modify the state.  To correctly interact
+     * with fragments in their proper state, you should instead override
+     * {@link #onResumeFragments()}.
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mNotes.clear();
+        mNotes.addAll(SQLManager.GetNoteList(this, SQLManager.DATABASE_FILE_NAME, SQLManager.CURRENT_DATABASE_VERSION));
+        Collections.sort(mNotes);
+        noteAdapter.notifyDataSetChanged();
     }
 
     /**
